@@ -20,3 +20,8 @@ export type CitiesResult = {
   cities: City[]
   total: number
 }
+
+export type UpdateCityPayload = {
+  visited?: boolean
+  wishlist?: boolean
+}
