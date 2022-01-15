@@ -1,4 +1,15 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.workingDirectories": [{ "pattern": "packages/*" }]
+  "eslint.workingDirectories": [
+    {
+      "pattern": "packages/*"
+    }
+  ],
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#003523",
+    "titleBar.activeBackground": "#004A31",
+    "titleBar.activeForeground": "#E8FFF7"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
 }

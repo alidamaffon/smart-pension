@@ -12,6 +12,7 @@ export function fetchRequest<T>(
   const [isLoading, setIsLoading] = React.useState(false)
 
   React.useEffect(() => {
+    let isCancelled = false
     const fetchData = async () => {
       setIsLoading(true)
       try {
@@ -19,10 +20,12 @@ export function fetchRequest<T>(
           method: 'GET',
         })
         const data = (await res.json()) as T
-        if (res.ok) {
-          setData(data)
-        } else {
-          console.log(`Error ${res.status}: ${res.statusText}`)
+        if (!isCancelled) {
+          if (res.ok) {
+            setData(data)
+          } else {
+            console.log(`Error ${res.status}: ${res.statusText}`)
+          }
         }
       } catch (error) {
         console.log(`Error: ${error}`)
@@ -30,6 +33,9 @@ export function fetchRequest<T>(
       setIsLoading(false)
     }
     fetchData()
+    return () => {
+      isCancelled = true
+    }
   }, [url])
 
   return { data, isLoading }
