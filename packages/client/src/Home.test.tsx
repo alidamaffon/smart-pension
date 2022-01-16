@@ -22,18 +22,28 @@ beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-test('renders homepage title', async () => {
+test('renders home page title', async () => {
   const { getByText } = render(<Home />)
-  const header = getByText(/Smart traveller/i)
-  expect(header).toBeInTheDocument()
+  const Header = getByText(/Smart traveller/i)
+  expect(Header).toBeInTheDocument()
 })
 
-test('Display result on user nput', async () => {
+test('renders result on user input', async () => {
   const { findByTestId, getByTestId } = render(<Home />)
-  const searchField = getByTestId('homepage-input')
+  const SearchField = getByTestId('home-input')
 
-  const table = await findByTestId('homepage-table')
-  userEvent.type(searchField, 'aris')
+  const HomeResults = await findByTestId('home-results')
+  userEvent.type(SearchField, 'aris')
   await screen.findByText('Paris')
-  expect(table.children.length).toBe(1)
+  expect(HomeResults.children.length).toBe(1)
+})
+
+test('renders message when there is no results', async () => {
+  const { findByTestId, getByTestId, getByText } = render(<Home />)
+  const SearchField = getByTestId('home-input')
+
+  await findByTestId('home-container')
+  userEvent.type(SearchField, 'uu')
+  const ErrorMessage = getByText(/No results found/i)
+  expect(ErrorMessage).toBeInTheDocument()
 })
