@@ -19,13 +19,15 @@ export const CityListing: FC<CityListingProps> = ({ listingType }) => {
 
   return (
     <Container maxW="container.md" flexDir="row" data-testid="city-listing-container">
-      {isLoading ? (
-        <Spinner data-testid="loader" />
-      ) : !cities.length ? (
+      {isLoading && <Spinner data-testid="loader" />}
+
+      {!isLoading && !cities.length && (
         <Text fontSize="md" mt="5" textAlign="center" data-testid="city-listing-error-message">
           No results found
         </Text>
-      ) : (
+      )}
+
+      {!isLoading && cities.length && (
         <SimpleGrid columns={[1, 2, 3]} spacing={5} data-testid="city-listing">
           {cities.map(({ country, visited, wishlist, name, id }) => (
             <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" key={id}>
@@ -42,7 +44,7 @@ export const CityListing: FC<CityListingProps> = ({ listingType }) => {
                     </Badge>
                   )}
                   {listingType === 'wishlist' && visited && (
-                    <Badge borderRadius="full" px="2" colorScheme="pink" ml="1">
+                    <Badge borderRadius="full" px="2" colorScheme="purple" ml="1">
                       Visited
                     </Badge>
                   )}

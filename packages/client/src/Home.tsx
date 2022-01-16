@@ -6,7 +6,6 @@ import {
   Input,
   Heading,
   InputGroup,
-  IconButton,
   VStack,
   Table,
   Thead,
@@ -34,8 +33,12 @@ export const Home: FC = () => {
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     setInputValue(value)
-    const filteredCities = allCities.filter(city => city.name.toLowerCase().includes(value))
-    setFilteredCities(filteredCities)
+    if (value === '') {
+      setFilteredCities([])
+    } else {
+      const filteredCities = allCities.filter(city => city.name.toLowerCase().includes(value.toLowerCase()))
+      setFilteredCities(filteredCities)
+    }
   }
 
   const updateCity = async (cityID: number, payload: UpdateCityPayload) => {
@@ -54,19 +57,24 @@ export const Home: FC = () => {
       <Container maxW="container.md">
         <InputGroup>
           <Input onChange={handleOnChange} data-testid="home-input" />
-          <InputRightElement children={<IconButton aria-label="" icon={<Search2Icon />} />} />
+          <InputRightElement children={<Search2Icon />} />
         </InputGroup>
       </Container>
       <Container maxW="container.md">
-        {isLoading ? (
-          <Spinner />
-        ) : (
+        {isLoading && <Spinner />}
+        {!isLoading && (
           <Container maxW="container.md" data-testid="home-container">
-            {inputValue !== '' && !filteredCities.length ? (
+            {inputValue === '' && (
+              <Text fontSize="md" mt="5" textAlign="center" data-testid="home-error-message">
+                Please type a city name
+              </Text>
+            )}
+            {inputValue !== '' && !filteredCities.length && (
               <Text fontSize="md" mt="5" textAlign="center" data-testid="home-error-message">
                 No results found
               </Text>
-            ) : (
+            )}
+            {!!filteredCities.length && (
               <Table>
                 <Thead>
                   <Tr>

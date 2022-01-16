@@ -18,32 +18,35 @@ const server = setupServer(
   })
 )
 
-beforeAll(() => server.listen())
-afterEach(() => server.resetHandlers())
-afterAll(() => server.close())
+describe('<Home /> component', () => {
+  beforeAll(() => server.listen())
+  afterEach(() => server.resetHandlers())
+  afterAll(() => server.close())
 
-test('renders home page title', async () => {
-  const { getByText } = render(<Home />)
-  const Header = getByText(/Smart traveller/i)
-  expect(Header).toBeInTheDocument()
-})
+  it('renders home page title', async () => {
+    const { getByText } = render(<Home />)
+    const Header = getByText(/Smart traveller/i)
+    expect(Header).toBeInTheDocument()
+  })
 
-test('renders result on user input', async () => {
-  const { findByTestId, getByTestId } = render(<Home />)
-  const SearchField = getByTestId('home-input')
+  it('renders result on user input', async () => {
+    const { findByTestId, getByTestId } = render(<Home />)
+    const SearchField = getByTestId('home-input')
 
-  const HomeResults = await findByTestId('home-results')
-  userEvent.type(SearchField, 'aris')
-  await screen.findByText('Paris')
-  expect(HomeResults.children.length).toBe(1)
-})
+    await findByTestId('home-container')
+    userEvent.type(SearchField, 'aris')
+    const HomeResults = await findByTestId('home-results')
+    await screen.findByText('Paris')
+    expect(HomeResults.children.length).toBe(1)
+  })
 
-test('renders message when there is no results', async () => {
-  const { findByTestId, getByTestId, getByText } = render(<Home />)
-  const SearchField = getByTestId('home-input')
+  it('renders message when there is no results', async () => {
+    const { findByTestId, getByTestId, getByText } = render(<Home />)
+    const SearchField = getByTestId('home-input')
 
-  await findByTestId('home-container')
-  userEvent.type(SearchField, 'uu')
-  const ErrorMessage = getByText(/No results found/i)
-  expect(ErrorMessage).toBeInTheDocument()
+    await findByTestId('home-container')
+    userEvent.type(SearchField, 'uu')
+    const ErrorMessage = getByText(/No results found/i)
+    expect(ErrorMessage).toBeInTheDocument()
+  })
 })
