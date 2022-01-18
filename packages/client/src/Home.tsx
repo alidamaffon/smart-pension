@@ -56,7 +56,12 @@ export const Home: FC = () => {
       <Heading as="h1">Smart traveller</Heading>
       <Container maxW="container.md">
         <InputGroup>
-          <Input onChange={handleOnChange} data-testid="home-input" />
+          <Input
+            onChange={handleOnChange}
+            data-testid="home-input"
+            aria-label="search input"
+            placeholder="Please enter a city name"
+          />
           <InputRightElement children={<Search2Icon />} />
         </InputGroup>
       </Container>
@@ -84,27 +89,29 @@ export const Home: FC = () => {
                   </Tr>
                 </Thead>
                 <Tbody data-testid="home-results">
-                  {filteredCities.map(city => (
-                    <Tr key={city.id}>
-                      <Td>{city.name}</Td>
+                  {filteredCities.map(({ id, name, visited, wishlist }) => (
+                    <Tr key={id}>
+                      <Td>{name}</Td>
                       <Td>
                         <Switch
-                          isChecked={city.visited}
+                          isChecked={visited}
                           onChange={event =>
-                            updateCity(city.id, {
+                            updateCity(id, {
                               visited: event.target.checked,
                             })
                           }
+                          aria-label={`add or remove ${name} from your visited list`}
                         />
                       </Td>
                       <Td>
                         <Switch
-                          isChecked={city.wishlist}
+                          isChecked={wishlist}
                           onChange={event =>
-                            updateCity(city.id, {
+                            updateCity(id, {
                               wishlist: event.target.checked,
                             })
                           }
+                          aria-label={`add or remove ${name} from your wishlist`}
                         />
                       </Td>
                     </Tr>
