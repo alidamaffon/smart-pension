@@ -30,8 +30,8 @@ describe('<Home /> component', () => {
   })
 
   it('renders result on user input', async () => {
-    const { findByTestId, getByTestId } = render(<Home />)
-    const SearchField = getByTestId('home-input')
+    const { findByTestId, getByLabelText } = render(<Home />)
+    const SearchField = getByLabelText('search input')
 
     await findByTestId('home-container')
     userEvent.type(SearchField, 'aris')
@@ -41,8 +41,8 @@ describe('<Home /> component', () => {
   })
 
   it('renders message when there is no results', async () => {
-    const { findByTestId, getByTestId, getByText } = render(<Home />)
-    const SearchField = getByTestId('home-input')
+    const { findByTestId, getByText, getByLabelText } = render(<Home />)
+    const SearchField = getByLabelText('search input')
 
     await findByTestId('home-container')
     userEvent.type(SearchField, 'uu')

@@ -56,12 +56,7 @@ export const Home: FC = () => {
       <Heading as="h1">Smart traveller</Heading>
       <Container maxW="container.md">
         <InputGroup>
-          <Input
-            onChange={handleOnChange}
-            data-testid="home-input"
-            aria-label="search input"
-            placeholder="Please enter a city name"
-          />
+          <Input onChange={handleOnChange} aria-label="search input" placeholder="Please enter a city name" />
           <InputRightElement children={<Search2Icon />} />
         </InputGroup>
       </Container>

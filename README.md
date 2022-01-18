@@ -40,3 +40,10 @@ We have provided a few packages that will help you in your solution:
 - Functionality tested.
 - An accessible solution.
 - We use TypeScript and would be happy to see a well typed solution, however if you're not comfortable with this feel free to use JavaScript.
+
+## Possible improvements
+
+- Allow user to search for a city by country name
+- Use React Context to store the cities list and prevent additional request to be made when user is navigating
+- Display cities on a map
+- Improve ESLint configuration to warn against nested ternaries
